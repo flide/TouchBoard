@@ -14,6 +14,7 @@ public class CanvasActivity extends Activity {
 		setContentView(R.layout.activity_canvas);
 		
 		mDecorView = getWindow().getDecorView();
+		
 	}
 	
     @Override
