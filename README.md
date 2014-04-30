@@ -4,18 +4,46 @@ Also, since the various apps of this kind in the google play store ask for stupi
 Following are few ideas I currently have. I have also tried to catogriese them into various version goal.
 This is my first attempt at any opensource application, so please be patient with me.
 
-Todo - Version 1:
-1. White Canvas
-2. Immersive Mode
-3. Black Pen
-4. Clear the screen for new doodling.
+What all is available already?
+White Canvas
+	- Only white background, no option to change background color
+Immersive Mode
+	- Works in true fullscreen, only available for 4.2.2 and above
+Black Pen
+	- Only a Black pen with predefined stroke attributes.
+Clear the screen for new doodling.
+	- Currently, this is actually a bug. When the screen is reoriented the canvas is cleared.
 
-Various other Ideas :
-1. Add eraser tool
-2. Add undo tool
-3. basic drawable shapes like line, rectangle, circles etc.
-4. Selectable draw colour.
-5. Selectable background colour.
-6. Saving the current "flash of idea" as an image.
-7. Extendable canvas
-8. Some drawing tools like brush, airbrush etc.
+Various other Ideas I plan to implement (not in specific order) : 
+Modes of usage, just like vim. Modes should be interchangable by using hardware keys (vol-up or vol-down)
+	"paint mode" where you can "edit" the drawing.
+	"observe mode" where you can zoom, shrink, move to different parts of the painting.
+	"Visual mode"to select, cut, copy, paste and do similar stuff.
+Add eraser tool
+Add undo tool
+basic drawable shapes like line, rectangle, circles etc.
+Selectable draw colour.
+Selectable background colour.
+Saving the current "flash of idea" as an image.
+Extendable canvas
+Some drawing tools like brush, airbrush etc.
+
+## Developer
+### How to compile the source code?
+Before starting, you need the following prerequisites:
+-   Android SDK: http://developer.android.com/sdk/index.html
+-   Apache ant: http://ant.apache.org/
+
+    (Use `sudo apt-get install ant` on a proper OS)
+
+-   Git: http://git-scm.com/
+
+    (Use `sudo apt-get install git-core` on a proper OS)
+
+Get the source code:
+
+    git clone https://github.com/flide/TouchBoard.git && cd TouchBoard
+
+You're ready to compile it!
+
+    ant debug
