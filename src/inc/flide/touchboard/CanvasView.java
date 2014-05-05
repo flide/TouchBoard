@@ -4,19 +4,21 @@ import android.util.Log;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.Display;
 import android.graphics.Canvas;
 import android.graphics.Bitmap;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Matrix;
 import android.view.MotionEvent;
-
+import android.content.Context;
+import android.hardware.display.DisplayManager;
 
 public class CanvasView extends View 
 {
 
 	private static final String logTag = "CanvasView";
-	static int rotatePositive;
+	static int currentDisplayOrientation;
 	//drawing path
 	private Path path;
 	//drawing and canvas paint
@@ -67,7 +69,6 @@ public class CanvasView extends View
 		paint.setStrokeCap(Paint.Cap.ROUND);
 		
 		canvasPaint = new Paint(Paint.DITHER_FLAG);
-		rotatePositive = -1;
 		Log.v(logTag, "SetupDrawing() ended");
 	}
 
@@ -76,25 +77,28 @@ public class CanvasView extends View
 	{
 		Log.v(logTag, "onSizeChanged(w="+w+", h="+h+", oldw="+oldw+", oldh="+oldh+") Started");
 		super.onSizeChanged(w, h, oldw, oldh);
-		//if(canvasBitmap == null)
-		//{
-			//Log.v(logTag, "canvasBitmap was null");
-		//}
-		if(oldw==h && oldh==w)
+
+		DisplayManager displayManager = (DisplayManager)getContext().getSystemService(Context.DISPLAY_SERVICE);
+		Display display = displayManager.getDisplay(Display.DEFAULT_DISPLAY);
+
+		if(oldw==0 && oldh==0)
+		{
+			Log.v(logTag, "Application Initialized");
+			canvasBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+			currentDisplayOrientation = display.getRotation();
+		}
+		else if( currentDisplayOrientation != display.getRotation())
 		{
 			Log.v(logTag, "Screen was reoriented");
 			Matrix matrix = new Matrix();
-			matrix.postRotate(rotatePositive*90f);
+			int previousDisplayOrientation = currentDisplayOrientation;
+			currentDisplayOrientation = display.getRotation();
+			int rotateBy = (currentDisplayOrientation - previousDisplayOrientation) * -1;
+			matrix.postRotate(rotateBy*90f);
 			Bitmap rotatedBitmap = Bitmap.createBitmap(canvasBitmap, 0, 0, oldw, oldh, matrix, false);
-			//canvasBitmap.recycle();
+			canvasBitmap.recycle();
 			canvasBitmap = Bitmap.createBitmap(rotatedBitmap);
-			rotatePositive = rotatePositive * -1;
-			//rotatedBitmap.recycle();
-		}
-		else
-		{
-			Log.v(logTag, "Completely new screen found");
-			canvasBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+			rotatedBitmap.recycle();
 		}
 		Log.v(logTag, "canvasBitmap set, Drawing to Canvas");
 		drawCanvas = new Canvas(canvasBitmap);
