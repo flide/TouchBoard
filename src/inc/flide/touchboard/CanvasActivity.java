@@ -3,6 +3,8 @@ package inc.flide.touchboard;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.Window;
 
 public class CanvasActivity extends Activity {
 	
@@ -12,6 +14,12 @@ public class CanvasActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) 
 	{
 		super.onCreate(savedInstanceState);
+
+		Window window = getWindow();
+		WindowManager.LayoutParams wmlp = new WindowManager.LayoutParams();
+		wmlp.copyFrom(window.getAttributes());
+		wmlp.rotationAnimation = WindowManager.LayoutParams.ROTATION_ANIMATION_JUMPCUT;
+		window.setAttributes(wmlp);
 
 		mDecorView = getWindow().getDecorView();
 		setImmersiveMode();
