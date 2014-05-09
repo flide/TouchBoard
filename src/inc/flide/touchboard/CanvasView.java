@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.util.AttributeSet;
 import android.content.Context;
+import android.app.Activity;
 
 import android.view.View;
 import android.view.Display;
@@ -100,8 +101,8 @@ public class CanvasView extends View
 		Verbose("onSizeChanged(w="+w+", h="+h+", oldw="+oldw+", oldh="+oldh+") Started");
 		super.onSizeChanged(w, h, oldw, oldh);
 
-		DisplayManager displayManager = (DisplayManager)getContext().getSystemService(Context.DISPLAY_SERVICE);
-		Display display = displayManager.getDisplay(Display.DEFAULT_DISPLAY);
+		Activity parentActivity = (Activity)getContext();
+		Display display = parentActivity.getWindowManager().getDefaultDisplay();
 
 		if(oldw==0 && oldh==0)
 		{

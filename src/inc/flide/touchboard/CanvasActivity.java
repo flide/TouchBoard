@@ -99,12 +99,6 @@ public class CanvasActivity extends Activity
 		//All flags are a go, let it rip!!
 		getWindow().getDecorView().setSystemUiVisibility(newUiOptions);
 
-	    //mDecorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-		    //| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-		    //| View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-		    //| View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-		    //| View.SYSTEM_UI_FLAG_FULLSCREEN
-		    //| View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
 		Verbose("Ending the setImmersiveMode()");
 	}
 }
