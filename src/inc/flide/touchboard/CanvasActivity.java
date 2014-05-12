@@ -1,5 +1,7 @@
 package inc.flide.touchboard;
 
+import inc.flide.touchboard.logging.*;
+
 import android.app.Activity;
 import android.util.Log;
 import android.os.Build;
@@ -8,26 +10,22 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.Window;
 
-public class CanvasActivity extends Activity 
+public class CanvasActivity extends Activity implements LoggingConstants
 {
-	
 	//Adding the Debug variables and functions
 	private static final String CLASS_NAME = "CanvasActivity";
-	private static final boolean DEBUG = true;
-	private static final boolean VERBOSE = true;
 
 	void Verbose(String message)
 	{
-		 if(VERBOSE == true)
-			 Log.v(CLASS_NAME, message);
+		 if(LoggingConstants.VERBOSE == true)
+			 Log.v(LoggingConstants.Project_Name, CLASS_NAME + message);
 			  
 	}
 
 	void Debug(String message)
 	{
-		 if(DEBUG == true)
-			 Log.d(CLASS_NAME, message);
-			  
+		 if(LoggingConstants.DEBUG == true)
+			 Log.d(LoggingConstants.Project_Name, CLASS_NAME + message);
 	}
 	//Debuging segment ends
 	@Override
