@@ -43,10 +43,12 @@ public class CanvasView extends View implements LoggingConstants
 	//Debuging segment ends
 	
 	static int currentDisplayOrientation;
+
+	Tool currentTool;
 	//drawing path
 	private Path path;
 	//drawing and canvas paint
-	private Paint paint, canvasPaint;
+	private Paint paint;
 	//initial color
 	private int paintColor = 0xFF000000;
 	//canvas
@@ -77,23 +79,34 @@ public class CanvasView extends View implements LoggingConstants
 		SetupDrawing();
 		Verbose("CanvasView(Context, AtributeSet, int) Ended");
 	}
-	
+
 	private void SetupDrawing()
 	{
 
 		Verbose("SetupDrawing() started");
-		path = new Path();
-		paint = new Paint();
-		
-		paint.setColor(paintColor);
-		paint.setAntiAlias(true);
-		paint.setStrokeWidth(1);
-		paint.setStyle(Paint.Style.STROKE);
-		paint.setStrokeJoin(Paint.Join.ROUND);
-		paint.setStrokeCap(Paint.Cap.ROUND);
-		
-		canvasPaint = new Paint(Paint.DITHER_FLAG);
+		currentTool = new Pen();
 		Verbose("SetupDrawing() ended");
+	}
+
+	@Override
+	public boolean onTouchEvent(MotionEvent event) 
+	{
+
+	//detect user touch
+		
+		currentTool.handleTouchEvent(event);
+		drawCanvas.drawPath(currentTool.getPath(), currentTool.getPaint());
+		invalidate(); 		//Calls on draw
+		return true;
+	}
+
+	@Override
+	protected void onDraw(Canvas canvas) 
+	{
+	//draw view
+		canvas.drawBitmap(canvasBitmap, 0, 0,currentTool.getPaint());
+		//canvas.drawBitmap(canvasBitmap, 0, 0, canvasPaint);
+		//canvas.drawPath(path, paint);
 	}
 
 	@Override
@@ -129,37 +142,5 @@ public class CanvasView extends View implements LoggingConstants
 		Verbose("onSizeChanged(int,int,int,int) Ended");
 	}
 
-	@Override
-	protected void onDraw(Canvas canvas) 
-	{
-	//draw view
-		canvas.drawBitmap(canvasBitmap, 0, 0, canvasPaint);
-		canvas.drawPath(path, paint);
-	}
 	
-	@Override
-	public boolean onTouchEvent(MotionEvent event) 
-	{
-	//detect user touch
-		float touchX = event.getX();
-		float touchY = event.getY();
-		
-		switch (event.getAction()) {
-		case MotionEvent.ACTION_DOWN:
-		    path.moveTo(touchX, touchY);
-		    break;
-		case MotionEvent.ACTION_MOVE:
-		    path.lineTo(touchX, touchY);
-		    break;
-		case MotionEvent.ACTION_UP:
-		    drawCanvas.drawPath(path, paint);
-		    path.reset();
-		    break;
-		default:
-		    return false;
-		}
-		
-		invalidate();
-		return true;
-	}
 }
