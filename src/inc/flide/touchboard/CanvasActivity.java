@@ -10,47 +10,32 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.Window;
 
-public class CanvasActivity extends Activity implements LoggingConstants
+public class CanvasActivity extends Activity
 {
-	//Adding the Debug variables and functions
-	private static final String CLASS_NAME = "CanvasActivity";
 
-	void Verbose(String message)
-	{
-		 if(LoggingConstants.VERBOSE == true)
-			 Log.v(LoggingConstants.Project_Name, CLASS_NAME + message);
-			  
-	}
-
-	void Debug(String message)
-	{
-		 if(LoggingConstants.DEBUG == true)
-			 Log.d(LoggingConstants.Project_Name, CLASS_NAME + message);
-	}
-	//Debuging segment ends
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{
-		Verbose("Starting onCreate(Bundle)");
+		Logger.Verbose(this.getClass().getName(), "Starting onCreate(Bundle)");
 		super.onCreate(savedInstanceState);
 
 		Window window = getWindow();
 		WindowManager.LayoutParams wmlp = new WindowManager.LayoutParams();
-		Verbose("WindowManager.LayoutParams created");
+		Logger.Verbose(this.getClass().getName(), "WindowManager.LayoutParams created");
 		wmlp.copyFrom(window.getAttributes());
-		Verbose("Attributes copied");
+		Logger.Verbose(this.getClass().getName(), "Attributes copied");
 		if(Build.VERSION.SDK_INT >= 18)
 		{
 			wmlp.rotationAnimation = WindowManager.LayoutParams.ROTATION_ANIMATION_JUMPCUT;
-			Verbose("Attribute for rotation set");
+			Logger.Verbose(this.getClass().getName(), "Attribute for rotation set");
 		}
 		window.setAttributes(wmlp);
-		Verbose("Attributes Set");
+		Logger.Verbose(this.getClass().getName(), "Attributes Set");
 
 		setImmersiveMode();	//if possible that is... get the best available
 
 		setContentView(R.layout.activity_canvas);
-		Verbose("Ending onCreate(Bundle)");
+		Logger.Verbose(this.getClass().getName(), "Ending onCreate(Bundle)");
 	}
 	
 	@Override
@@ -65,7 +50,7 @@ public class CanvasActivity extends Activity implements LoggingConstants
     	
     	private void setImmersiveMode()
 	{
-		Verbose("Starting the setImmersiveMode()");
+		Logger.Verbose(this.getClass().getName(), "Starting the setImmersiveMode()");
 		int uiOptions = getWindow().getDecorView().getSystemUiVisibility();
 		int newUiOptions = uiOptions;
 
@@ -97,6 +82,6 @@ public class CanvasActivity extends Activity implements LoggingConstants
 		//All flags are a go, let it rip!!
 		getWindow().getDecorView().setSystemUiVisibility(newUiOptions);
 
-		Verbose("Ending the setImmersiveMode()");
+		Logger.Verbose(this.getClass().getName(), "Ending the setImmersiveMode()");
 	}
 }

@@ -21,26 +21,8 @@ import android.graphics.Path;
 import android.graphics.Matrix;
 import android.hardware.display.DisplayManager;
 
-public class CanvasView extends View implements LoggingConstants
+public class CanvasView extends View
 {
-
-	//Adding the Debug variables and functions
-	private static final String CLASS_NAME = "CanvasView";
-
-	void Verbose(String message)
-	{
-		 if(LoggingConstants.VERBOSE == true)
-			 Log.v(LoggingConstants.Project_Name, CLASS_NAME + message);
-			  
-	}
-
-	void Debug(String message)
-	{
-		 if(LoggingConstants.DEBUG == true)
-			 Log.d(LoggingConstants.Project_Name, CLASS_NAME + message);
-			  
-	}
-	//Debuging segment ends
 	
 	static int currentDisplayOrientation;
 
@@ -59,33 +41,33 @@ public class CanvasView extends View implements LoggingConstants
 	public CanvasView(Context context) 
 	{
 		super(context);
-		Verbose("CanvasView(Context) Started");
+		Logger.Verbose(this.getClass().getName(),"CanvasView(Context) Started");
 		SetupDrawing();
-		Verbose("CanvasView(Context) Ended");
+		Logger.Verbose(this.getClass().getName(),"CanvasView(Context) Ended");
 	}
 	
 	public CanvasView(Context context, AttributeSet attrs) 
 	{
 		super(context, attrs);
-		Verbose("CanvasView(Context, AtributeSet) Started");
+		Logger.Verbose(this.getClass().getName(),"CanvasView(Context, AtributeSet) Started");
 		SetupDrawing();
-		Verbose("CanvasView(Context, AtributeSet) Ended");
+		Logger.Verbose(this.getClass().getName(),"CanvasView(Context, AtributeSet) Ended");
 	}
 	
 	public CanvasView(Context context, AttributeSet attrs, int defStyleAttr) 
 	{
 		super(context, attrs, defStyleAttr);
-		Verbose("CanvasView(Context, AtributeSet, int) Started");
+		Logger.Verbose(this.getClass().getName(),"CanvasView(Context, AtributeSet, int) Started");
 		SetupDrawing();
-		Verbose("CanvasView(Context, AtributeSet, int) Ended");
+		Logger.Verbose(this.getClass().getName(),"CanvasView(Context, AtributeSet, int) Ended");
 	}
 
 	private void SetupDrawing()
 	{
 
-		Verbose("SetupDrawing() started");
+		Logger.Verbose(this.getClass().getName(),"SetupDrawing() started");
 		currentTool = new Pen();
-		Verbose("SetupDrawing() ended");
+		Logger.Verbose(this.getClass().getName(),"SetupDrawing() ended");
 	}
 
 	@Override
@@ -112,7 +94,7 @@ public class CanvasView extends View implements LoggingConstants
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) 
 	{
-		Verbose("onSizeChanged(w="+w+", h="+h+", oldw="+oldw+", oldh="+oldh+") Started");
+		Logger.Verbose(this.getClass().getName(),"onSizeChanged(w="+w+", h="+h+", oldw="+oldw+", oldh="+oldh+") Started");
 		super.onSizeChanged(w, h, oldw, oldh);
 
 		Activity parentActivity = (Activity)getContext();
@@ -120,13 +102,13 @@ public class CanvasView extends View implements LoggingConstants
 
 		if(oldw==0 && oldh==0)
 		{
-			Verbose("Application Initialized");
+			Logger.Verbose(this.getClass().getName(),"Application Initialized");
 			canvasBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
 			currentDisplayOrientation = display.getRotation();
 		}
 		else if( currentDisplayOrientation != display.getRotation())
 		{
-			Verbose("Screen was reoriented");
+			Logger.Verbose(this.getClass().getName(),"Screen was reoriented");
 			Matrix matrix = new Matrix();
 			int previousDisplayOrientation = currentDisplayOrientation;
 			currentDisplayOrientation = display.getRotation();
@@ -137,9 +119,9 @@ public class CanvasView extends View implements LoggingConstants
 			canvasBitmap = Bitmap.createBitmap(rotatedBitmap);
 			rotatedBitmap.recycle();
 		}
-		Verbose("canvasBitmap set, Drawing to Canvas");
+		Logger.Verbose(this.getClass().getName(),"canvasBitmap set, Drawing to Canvas");
 		drawCanvas = new Canvas(canvasBitmap);
-		Verbose("onSizeChanged(int,int,int,int) Ended");
+		Logger.Verbose(this.getClass().getName(),"onSizeChanged(int,int,int,int) Ended");
 	}
 
 	
