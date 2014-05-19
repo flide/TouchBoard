@@ -21,28 +21,27 @@ import android.graphics.Path;
 import android.graphics.Matrix;
 import android.hardware.display.DisplayManager;
 
+//this will be the View of the MVC.
+//I am not very convinced that CanvasView should be the View part of MVC model, but current
+//experiment scenario dictates that I try this out.
+//Primary Responsibility and the ONLY Responsibility this class should and will have, would be
+//to draw to the user.
+//Strict No to state mantianance, handling user input or doing any data manipulation.
 public class CanvasView extends View
 {
 	
-	static int currentDisplayOrientation;
+	private static int currentDisplayOrientation;
+	private CanvasModel model;
 
-	Tool currentTool;
-	//drawing path
-	private Path path;
-	//drawing and canvas paint
-	private Paint paint;
-	//initial color
-	private int paintColor = 0xFF000000;
-	//canvas
-	private Canvas drawCanvas;
-	//canvas bitmap
-	private Bitmap canvasBitmap;
+	public void setModel(CanvasModel model)
+	{
+		 this.model = model;
+	}
 	
 	public CanvasView(Context context) 
 	{
 		super(context);
 		Logger.Verbose(this.getClass().getName(),"CanvasView(Context) Started");
-		SetupDrawing();
 		Logger.Verbose(this.getClass().getName(),"CanvasView(Context) Ended");
 	}
 	
@@ -50,7 +49,6 @@ public class CanvasView extends View
 	{
 		super(context, attrs);
 		Logger.Verbose(this.getClass().getName(),"CanvasView(Context, AtributeSet) Started");
-		SetupDrawing();
 		Logger.Verbose(this.getClass().getName(),"CanvasView(Context, AtributeSet) Ended");
 	}
 	
@@ -58,37 +56,22 @@ public class CanvasView extends View
 	{
 		super(context, attrs, defStyleAttr);
 		Logger.Verbose(this.getClass().getName(),"CanvasView(Context, AtributeSet, int) Started");
-		SetupDrawing();
 		Logger.Verbose(this.getClass().getName(),"CanvasView(Context, AtributeSet, int) Ended");
 	}
 
-	private void SetupDrawing()
-	{
-
-		Logger.Verbose(this.getClass().getName(),"SetupDrawing() started");
-		currentTool = new Pen();
-		Logger.Verbose(this.getClass().getName(),"SetupDrawing() ended");
-	}
-
-	@Override
-	public boolean onTouchEvent(MotionEvent event) 
-	{
-
-	//detect user touch
-		
-		currentTool.handleTouchEvent(event);
-		drawCanvas.drawPath(currentTool.getPath(), currentTool.getPaint());
-		invalidate(); 		//Calls on draw
-		return true;
-	}
 
 	@Override
 	protected void onDraw(Canvas canvas) 
 	{
-	//draw view
-		canvas.drawBitmap(canvasBitmap, 0, 0,currentTool.getPaint());
-		//canvas.drawBitmap(canvasBitmap, 0, 0, canvasPaint);
-		//canvas.drawPath(path, paint);
+		Logger.Verbose(this.getClass().getName(), "Starting onDraw()");
+		//Debugging
+		Bitmap bitmap = model.getBitmap();
+		Logger.Debug(this.getClass().getName(),"Bitmap is ok");
+		Paint paint = model.getTool().getPaint();
+		Logger.Debug(this.getClass().getName(),"Paint is ok");
+		//debugging ended
+		canvas.drawBitmap(model.getBitmap(), 0, 0,model.getTool().getPaint());
+		Logger.Verbose(this.getClass().getName(), "Ending onDraw()");
 	}
 
 	@Override
@@ -100,8 +83,11 @@ public class CanvasView extends View
 		Activity parentActivity = (Activity)getContext();
 		Display display = parentActivity.getWindowManager().getDefaultDisplay();
 
+		Bitmap canvasBitmap;
+
 		if(oldw==0 && oldh==0)
 		{
+			//Initialization of the application and this block will run only once.
 			Logger.Verbose(this.getClass().getName(),"Application Initialized");
 			canvasBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
 			currentDisplayOrientation = display.getRotation();
@@ -114,15 +100,19 @@ public class CanvasView extends View
 			currentDisplayOrientation = display.getRotation();
 			int rotateBy = (currentDisplayOrientation - previousDisplayOrientation) * -1;
 			matrix.postRotate(rotateBy*90f);
-			Bitmap rotatedBitmap = Bitmap.createBitmap(canvasBitmap, 0, 0, oldw, oldh, matrix, false);
-			canvasBitmap.recycle();
+			Bitmap rotatedBitmap = Bitmap.createBitmap(model.getBitmap(), 0, 0, oldw, oldh, matrix, false);
 			canvasBitmap = Bitmap.createBitmap(rotatedBitmap);
 			rotatedBitmap.recycle();
 		}
+		else
+		{
+			 return;
+		}
 		Logger.Verbose(this.getClass().getName(),"canvasBitmap set, Drawing to Canvas");
-		drawCanvas = new Canvas(canvasBitmap);
+		//drawCanvas = new Canvas(canvasBitmap);
+		//model data should not be manipulated in the View. Think something else.
+		model.setBitmap(canvasBitmap);
 		Logger.Verbose(this.getClass().getName(),"onSizeChanged(int,int,int,int) Ended");
 	}
 
-	
 }

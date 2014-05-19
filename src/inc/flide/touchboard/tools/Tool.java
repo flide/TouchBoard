@@ -1,5 +1,7 @@
 package inc.flide.touchboard.tools;
 
+import inc.flide.touchboard.CanvasModel;
+
 import android.view.MotionEvent;
 
 import android.graphics.Canvas;
@@ -11,20 +13,25 @@ abstract public class Tool
 {
 	protected Path path;
 	protected Paint paint;
-	protected int color;
+	protected CanvasModel model;
 	abstract public boolean handleTouchEvent(MotionEvent event);
 
-	//getter methods
+	public void setModel(CanvasModel model)
+	{
+		 this.model = model;
+	}
 	public Path getPath()
 	{
 		 return path;
+	}
+	public void setPath(Path path)
+	{
+		 this.path = new Path(path);
 	}
 	public Paint getPaint()
 	{
 		 return paint;
 	}
-
-	//setter methods
 	public void setPaint(Paint input_paint)
 	{
 		 this.paint = new Paint(input_paint);

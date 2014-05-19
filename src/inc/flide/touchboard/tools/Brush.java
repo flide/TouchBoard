@@ -1,5 +1,6 @@
 package inc.flide.touchboard.tools;
 
+import inc.flide.touchboard.logging.*;
 import android.view.MotionEvent;
 
 import android.graphics.Canvas;
@@ -11,10 +12,11 @@ abstract public class Brush extends Tool
 {
 	public Brush()
 	{
+		Logger.Verbose(this.getClass().getName(), "Initiating Brush");
 		//setup default brush
 		path = new Path();
 		paint = new Paint();
-		color = 0xFF000000;
+		int color = 0xFF000000;
 
 		paint.setColor(color);
 		paint.setAntiAlias(true);
@@ -23,5 +25,6 @@ abstract public class Brush extends Tool
 		paint.setStrokeJoin(Paint.Join.ROUND);
 		paint.setStrokeCap(Paint.Cap.ROUND);
 		paint.setDither(true);
+		Logger.Verbose(this.getClass().getName(), "Ending Brush");
 	}
 }
