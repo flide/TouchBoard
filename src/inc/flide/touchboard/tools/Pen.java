@@ -18,9 +18,11 @@ public class Pen extends Brush
 		{
 		case MotionEvent.ACTION_DOWN:
 		    path.moveTo(touchX, touchY);
+		    model.updateBitmap(path,paint);
 		    break;
 		case MotionEvent.ACTION_MOVE:
 		    path.lineTo(touchX, touchY);
+		    model.updateBitmap(path,paint);
 		    break;
 		case MotionEvent.ACTION_UP:
 		    //update model with the new path
