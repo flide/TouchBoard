@@ -11,17 +11,18 @@ public class Pen extends Brush
 {
 	public boolean handleTouchEvent(MotionEvent event)
 	{
-		float touchX = event.getX();
-		float touchY = event.getY();
+		float x = event.getX();
+		float y = event.getY();
 		
 		switch (event.getAction()) 
 		{
 		case MotionEvent.ACTION_DOWN:
-		    path.moveTo(touchX, touchY);
+		    path.moveTo(x, y);
+		    path.addCircle(x, y, paint.getStrokeWidth()/2,Path.Direction.CW);
 		    model.updateBitmap(path,paint);
 		    break;
 		case MotionEvent.ACTION_MOVE:
-		    path.lineTo(touchX, touchY);
+		    path.lineTo(x, y);
 		    model.updateBitmap(path,paint);
 		    break;
 		case MotionEvent.ACTION_UP:
