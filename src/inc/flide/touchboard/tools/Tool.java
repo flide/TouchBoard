@@ -16,10 +16,15 @@ abstract public class Tool
 	protected CanvasModel model;
 	abstract public boolean handleTouchEvent(MotionEvent event);
 
-	public void setModel(CanvasModel model)
+	public Tool(CanvasModel model)
 	{
 		 this.model = model;
 	}
+
+	abstract public void onPenDown(MotionEvent event);
+	abstract public void onPenMove(MotionEvent event);
+	abstract public void onPenUp(MotionEvent event);
+
 	public Path getPath()
 	{
 		 return path;

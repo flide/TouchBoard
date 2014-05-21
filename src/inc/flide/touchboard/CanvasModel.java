@@ -17,8 +17,8 @@ public class CanvasModel
 	public CanvasModel()
 	{
 		 Logger.Verbose(this.getClass().getName(), "Trying to create Model object");
-		 tool = new Pen();
-		 tool.setModel(this);
+		 tool = new Pen(this);
+		 //tool.setModel(this);
 		 Logger.Verbose(this.getClass().getName(), "Tool has been initialized");
 	}
 	public void updateBitmap(Path path, Paint paint)
@@ -26,6 +26,7 @@ public class CanvasModel
 		 Canvas canvas = new Canvas(bitmap);
 		 canvas.drawPath(path,paint);
 	}
+
 	//Getter's and Setter's for the data variables
 	public Tool getTool()
 	{
