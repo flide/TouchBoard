@@ -1,6 +1,7 @@
-package inc.flide.touchboard.tools;
+package inc.flide.touchboard.tool;
 
 import inc.flide.touchboard.logging.*;
+import inc.flide.touchboard.model.*;
 import inc.flide.touchboard.*;
 
 import android.view.MotionEvent;

@@ -1,12 +1,15 @@
-package inc.flide.touchboard;
+package inc.flide.touchboard.model;
 
-import inc.flide.touchboard.tools.*;
+import inc.flide.touchboard.*;
+import inc.flide.touchboard.tool.*;
 import inc.flide.touchboard.logging.*;
 
 import android.graphics.Canvas;
 import android.graphics.Bitmap;
 import android.graphics.Paint;
 import android.graphics.Path;
+
+import android.view.KeyEvent;
 
 public class CanvasModel
 {
@@ -16,10 +19,12 @@ public class CanvasModel
 
 	public CanvasModel()
 	{
-		 Logger.Verbose(this.getClass().getName(), "Trying to create Model object");
-		 tool = new Pen(this);
-		 //tool.setModel(this);
-		 Logger.Verbose(this.getClass().getName(), "Tool has been initialized");
+		tool = new Pen(this);
+	}
+
+	public void changeMode(KeyEvent event)
+	{
+		 
 	}
 	public void updateBitmap(Path path, Paint paint)
 	{

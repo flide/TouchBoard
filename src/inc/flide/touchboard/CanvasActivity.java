@@ -2,7 +2,8 @@ package inc.flide.touchboard;
 
 import inc.flide.touchboard.logging.*;
 import inc.flide.touchboard.*;
-import inc.flide.touchboard.tools.*;
+import inc.flide.touchboard.model.*;
+import inc.flide.touchboard.tool.*;
 
 import android.app.Activity;
 import android.util.Log;
@@ -31,25 +32,18 @@ public class CanvasActivity extends Activity
 
 		Window window = getWindow();
 		WindowManager.LayoutParams wmlp = new WindowManager.LayoutParams();
-		Logger.Verbose(this.getClass().getName(), "WindowManager.LayoutParams created");
-
 		wmlp.copyFrom(window.getAttributes());
-		Logger.Verbose(this.getClass().getName(), "Attributes copied");
-
 		if(Build.VERSION.SDK_INT >= 18)
 		{
 			wmlp.rotationAnimation = WindowManager.LayoutParams.ROTATION_ANIMATION_JUMPCUT;
-			Logger.Verbose(this.getClass().getName(), "Attribute for rotation set");
 		}
 		window.setAttributes(wmlp);
-		Logger.Verbose(this.getClass().getName(), "Attributes Set");
 
 		setImmersiveMode();	//if possible that is... get the best available
 
 		setContentView(R.layout.activity_canvas);
 
 		model = new CanvasModel();
-		Logger.Verbose(this.getClass().getName(), "Model object created");
 		view = (CanvasView)findViewById(R.id.viewCanvas);
 		view.setModel(model);
 
@@ -117,8 +111,12 @@ public class CanvasActivity extends Activity
 	@Override
 	public boolean dispatchKeyEvent(KeyEvent event)
 	{
-		//changeMode(event); 
-		return true;
+		if(event.getKeyCode() == KeyEvent.KEYCODE_VOLUME_DOWN || event.getKeyCode() == KeyEvent.KEYCODE_VOLUME_UP)
+		{
+			model.changeMode(event); 
+			return true;
+		}
+		return super.dispatchKeyEvent(event);
 	}
 
 }

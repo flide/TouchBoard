@@ -1,6 +1,7 @@
 package inc.flide.touchboard;
 
-import inc.flide.touchboard.tools.*;
+import inc.flide.touchboard.tool.*;
+import inc.flide.touchboard.model.*;
 import inc.flide.touchboard.logging.*;
 
 import android.os.Build;
@@ -25,7 +26,7 @@ import android.hardware.display.DisplayManager;
 //I am not very convinced that CanvasView should be the View part of MVC model, but current
 //experiment scenario dictates that I try this out.
 //Primary Responsibility and the ONLY Responsibility this class should and will have, would be
-//to draw to the user.
+//to Present the screen to the user.
 //Strict No to state mantianance, handling user input or doing any data manipulation.
 public class CanvasView extends View
 {
