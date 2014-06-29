@@ -24,10 +24,14 @@ public class CanvasActivity extends Activity
 	private CanvasModel model;
 	private CanvasView view;
 
+	public CanvasActivity()
+	{
+		Logger.setTag(this.getClass().getName());
+	}
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{
-		Logger.Verbose(this.getClass().getName(), "Starting onCreate(Bundle)");
+		Logger.Verbose("Starting onCreate(Bundle)");
 		super.onCreate(savedInstanceState);
 
 		Window window = getWindow();
@@ -47,24 +51,24 @@ public class CanvasActivity extends Activity
 		view = (CanvasView)findViewById(R.id.viewCanvas);
 		view.setModel(model);
 
-		Logger.Verbose(this.getClass().getName(), "Ending onCreate(Bundle)");
+		Logger.Verbose("Ending onCreate(Bundle)");
 	}
 	
 	@Override
 	public void onWindowFocusChanged(boolean hasFocus) 
 	{
-		Logger.Verbose(this.getClass().getName(), "Starting the onWindowFocusChanged()");
+		Logger.Verbose("Starting the onWindowFocusChanged()");
 		super.onWindowFocusChanged(hasFocus);
 		if (hasFocus) 
 			{
 			setImmersiveMode();
 			}
-		Logger.Verbose(this.getClass().getName(), "Ending the onWindowFocusChanged()");
+		Logger.Verbose("Ending the onWindowFocusChanged()");
 	}
     	
     	private void setImmersiveMode()
 	{
-		Logger.Verbose(this.getClass().getName(), "Starting the setImmersiveMode()");
+		Logger.Verbose("Starting the setImmersiveMode()");
 		int uiOptions = getWindow().getDecorView().getSystemUiVisibility();
 		int newUiOptions = uiOptions;
 
@@ -96,7 +100,7 @@ public class CanvasActivity extends Activity
 		//All flags are a go, let it rip!!
 		getWindow().getDecorView().setSystemUiVisibility(newUiOptions);
 
-		Logger.Verbose(this.getClass().getName(), "Ending the setImmersiveMode()");
+		Logger.Verbose("Ending the setImmersiveMode()");
 	}
 
 	@Override
@@ -111,11 +115,14 @@ public class CanvasActivity extends Activity
 	@Override
 	public boolean dispatchKeyEvent(KeyEvent event)
 	{
+		Logger.Verbose("Starting dispatchKeyEvent(KeyEvent)");
 		if(event.getKeyCode() == KeyEvent.KEYCODE_VOLUME_DOWN || event.getKeyCode() == KeyEvent.KEYCODE_VOLUME_UP)
 		{
+			Logger.Verbose("Volume Key pressed");
 			model.changeMode(event); 
 			return true;
 		}
+		Logger.Verbose("Ending dispatchKeyEvent(KeyEvent)");
 		return super.dispatchKeyEvent(event);
 	}
 

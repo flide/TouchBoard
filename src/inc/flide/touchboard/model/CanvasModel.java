@@ -24,7 +24,7 @@ public class CanvasModel
 
 	public void changeMode(KeyEvent event)
 	{
-		 
+		Logger.Verbose( "Change Mode called");
 	}
 	public void updateBitmap(Path path, Paint paint)
 	{

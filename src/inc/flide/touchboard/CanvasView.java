@@ -42,43 +42,46 @@ public class CanvasView extends View
 	public CanvasView(Context context) 
 	{
 		super(context);
-		Logger.Verbose(this.getClass().getName(),"CanvasView(Context) Started");
-		Logger.Verbose(this.getClass().getName(),"CanvasView(Context) Ended");
+		Logger.setTag(this.getClass().getName());
+		Logger.Verbose("CanvasView(Context) Started");
+		Logger.Verbose("CanvasView(Context) Ended");
 	}
 	
 	public CanvasView(Context context, AttributeSet attrs) 
 	{
 		super(context, attrs);
-		Logger.Verbose(this.getClass().getName(),"CanvasView(Context, AtributeSet) Started");
-		Logger.Verbose(this.getClass().getName(),"CanvasView(Context, AtributeSet) Ended");
+		Logger.setTag(this.getClass().getName());
+		Logger.Verbose("CanvasView(Context, AtributeSet) Started");
+		Logger.Verbose("CanvasView(Context, AtributeSet) Ended");
 	}
 	
 	public CanvasView(Context context, AttributeSet attrs, int defStyleAttr) 
 	{
 		super(context, attrs, defStyleAttr);
-		Logger.Verbose(this.getClass().getName(),"CanvasView(Context, AtributeSet, int) Started");
-		Logger.Verbose(this.getClass().getName(),"CanvasView(Context, AtributeSet, int) Ended");
+		Logger.setTag(this.getClass().getName());
+		Logger.Verbose("CanvasView(Context, AtributeSet, int) Started");
+		Logger.Verbose("CanvasView(Context, AtributeSet, int) Ended");
 	}
 
 
 	@Override
 	protected void onDraw(Canvas canvas) 
 	{
-		Logger.Verbose(this.getClass().getName(), "Starting onDraw()");
+		Logger.Verbose( "Starting onDraw()");
 		//Debugging
 		Bitmap bitmap = model.getBitmap();
-		Logger.Debug(this.getClass().getName(),"Bitmap is ok");
+		Logger.Debug("Bitmap is ok");
 		Paint paint = model.getTool().getPaint();
-		Logger.Debug(this.getClass().getName(),"Paint is ok");
+		Logger.Debug("Paint is ok");
 		//debugging ended
 		canvas.drawBitmap(model.getBitmap(), 0, 0,model.getTool().getPaint());
-		Logger.Verbose(this.getClass().getName(), "Ending onDraw()");
+		Logger.Verbose( "Ending onDraw()");
 	}
 
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) 
 	{
-		Logger.Verbose(this.getClass().getName(),"onSizeChanged(w="+w+", h="+h+", oldw="+oldw+", oldh="+oldh+") Started");
+		Logger.Verbose("onSizeChanged(w="+w+", h="+h+", oldw="+oldw+", oldh="+oldh+") Started");
 		super.onSizeChanged(w, h, oldw, oldh);
 
 		Activity parentActivity = (Activity)getContext();
@@ -89,13 +92,13 @@ public class CanvasView extends View
 		if(oldw==0 && oldh==0)
 		{
 			//Initialization of the application and this block will run only once.
-			Logger.Verbose(this.getClass().getName(),"Application Initialized");
+			Logger.Verbose("Application Initialized");
 			canvasBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
 			currentDisplayOrientation = display.getRotation();
 		}
 		else if( currentDisplayOrientation != display.getRotation())
 		{
-			Logger.Verbose(this.getClass().getName(),"Screen was reoriented");
+			Logger.Verbose("Screen was reoriented");
 			Matrix matrix = new Matrix();
 			int previousDisplayOrientation = currentDisplayOrientation;
 			currentDisplayOrientation = display.getRotation();
@@ -109,11 +112,10 @@ public class CanvasView extends View
 		{
 			 return;
 		}
-		Logger.Verbose(this.getClass().getName(),"canvasBitmap set, Drawing to Canvas");
-		//drawCanvas = new Canvas(canvasBitmap);
+		Logger.Verbose("canvasBitmap set, Drawing to Canvas");
 		//model data should not be manipulated in the View. Think something else.
 		model.setBitmap(canvasBitmap);
-		Logger.Verbose(this.getClass().getName(),"onSizeChanged(int,int,int,int) Ended");
+		Logger.Verbose("onSizeChanged(int,int,int,int) Ended");
 	}
 
 }
