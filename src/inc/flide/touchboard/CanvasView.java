@@ -68,12 +68,8 @@ public class CanvasView extends View
 	protected void onDraw(Canvas canvas) 
 	{
 		Logger.Verbose( "Starting onDraw()");
-		//Debugging
 		Bitmap bitmap = model.getBitmap();
-		Logger.Debug("Bitmap is ok");
 		Paint paint = model.getTool().getPaint();
-		Logger.Debug("Paint is ok");
-		//debugging ended
 		canvas.drawBitmap(model.getBitmap(), 0, 0,model.getTool().getPaint());
 		Logger.Verbose( "Ending onDraw()");
 	}

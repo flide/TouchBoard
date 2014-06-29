@@ -16,12 +16,12 @@ abstract public class Brush extends Tool
 	public Brush(CanvasModel model)
 	{
 		super(model);
-		Logger.Verbose(this.getClass().getName(), "Initiating Brush");
+		Logger.Verbose("Initiating Brush");
 
 		path = new Path();
 		paint = new Paint();
 
-		Logger.Verbose(this.getClass().getName(), "Ending Brush");
+		Logger.Verbose("Ending Brush");
 	}
 
 }

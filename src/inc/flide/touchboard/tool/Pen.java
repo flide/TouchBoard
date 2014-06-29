@@ -85,13 +85,6 @@ public class Pen extends Brush
 
 	public void setPaintAttributes()
 	{
-		Logger.Verbose(this.getClass().getName(), "Starting setPaintAttributes()");
-		if(paint == null)
-			Logger.Verbose(this.getClass().getName(), "Paint happens to be null at this point!!");
-		else
-			Logger.Verbose(this.getClass().getName(), "Paint is A-OKAY");
-
-
 		//paint.setColor(model.getForegroundColor());
 		paint.setAntiAlias(true);
 		paint.setStrokeWidth(5);
@@ -99,7 +92,7 @@ public class Pen extends Brush
 		paint.setStrokeJoin(Paint.Join.ROUND);
 		paint.setStrokeCap(Paint.Cap.ROUND);
 		paint.setDither(true);
-		Logger.Verbose(this.getClass().getName(), "Ending setPaintAttributes()");
+		Logger.Verbose("Ending setPaintAttributes()");
 	}
 
 	private void setPenDownFlag()

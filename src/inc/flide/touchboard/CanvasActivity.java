@@ -46,10 +46,14 @@ public class CanvasActivity extends Activity
 		setImmersiveMode();	//if possible that is... get the best available
 
 		setContentView(R.layout.activity_canvas);
+		Logger.Debug("content view set");
 
 		model = new CanvasModel();
+		Logger.Debug("Model created");
 		view = (CanvasView)findViewById(R.id.viewCanvas);
+		Logger.Debug("View found");
 		view.setModel(model);
+		Logger.Debug("model set on View");
 
 		Logger.Verbose("Ending onCreate(Bundle)");
 	}
@@ -106,7 +110,6 @@ public class CanvasActivity extends Activity
 	@Override
 	public boolean onTouchEvent(MotionEvent event) 
 	{
-		//currentTool.handleTouchEvent(event);
 		model.getTool().handleTouchEvent(event);
 		view.invalidate();
 		return true;

@@ -4,65 +4,66 @@ import android.util.Log;
 
 public class Logger implements LoggingConstants
 {
-	public static String tag;
-	
-	public static void setTag(String className)
+	public static String className;
+	private static final String tag = LoggingConstants.Project_Name;
+
+	public static void setTag(String nameOfClass)
 	{
-		tag = LoggingConstants.Project_Name+className;
+		className = nameOfClass;
 	}
 
 	public static void Debug(String message)
 	{
 		 if(LoggingConstants.DEBUG == true)
-			 Log.d(tag, message);
+			 Log.d(tag, className + " : " + message);
 	}
 
 	public static void Debug(String message, Throwable tr)
 	{
 		 if(LoggingConstants.DEBUG == true)
-			 Log.d(tag, message, tr);
+			 Log.d(tag, className + " : " + message, tr);
 	}
 
 	public static void Error(String message)
 	{
 		 if(LoggingConstants.ERROR == true)
-			 Log.e(tag, message);
+			 Log.e(tag, className + " : " + message);
 	}
 
 	public static void Error(String message, Throwable tr)
 	{
 		 if(LoggingConstants.ERROR == true)
-			 Log.e(tag, message, tr);
+			 Log.e(tag, className + " : " + message, tr);
 	}
 
 	public static void Info(String message)
 	{
 		 if(LoggingConstants.INFO == true)
-			 Log.i(tag, message);
+			 Log.i(tag, className + " : " + message);
 	}
 
 	public static void Info(String message, Throwable tr)
 	{
 		 if(LoggingConstants.INFO == true)
-			 Log.i(tag, message, tr);
+			 Log.i(tag, className + " : " + message, tr);
 	}
 	
 	public static void Verbose(String message)
 	{
 		 if(LoggingConstants.VERBOSE == true)
-			 Log.v(tag, message);
+			 Log.v(tag, className + " : " + message);
 	}
 
 	public static void Verbose(String message, Throwable tr)
 	{
 		 if(LoggingConstants.VERBOSE == true)
-			 Log.v(tag, message, tr);
+			 Log.v(tag, className + " : " + message, tr);
 	}
 
 	public static void Warn(String message)
 	{
 		 if(LoggingConstants.WARN == true)
-			 Log.w(tag, message);
+			 Log.w(tag, className + " : " + message);
 	}
 
 	public static void Warn(Throwable tr)
@@ -74,7 +75,7 @@ public class Logger implements LoggingConstants
 	public static void Warn(String message, Throwable tr)
 	{
 		 if(LoggingConstants.WARN == true)
-			 Log.w(tag, message, tr);
+			 Log.w(tag, className + " : " + message, tr);
 	}
 
 }
