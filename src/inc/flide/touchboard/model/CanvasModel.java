@@ -5,7 +5,9 @@ import android.graphics.Bitmap;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.view.KeyEvent;
+import inc.flide.touchboard.R.color;
 import inc.flide.touchboard.logging.Logger;
+import android.graphics.Color;
 
 public class CanvasModel extends CanvasModel_ReadOnly {
 	private int foregroundColor, backgroundColor;
@@ -23,6 +25,8 @@ public class CanvasModel extends CanvasModel_ReadOnly {
 	}
 
 	public CanvasModel() {
+		this.backgroundColor = Color.WHITE;
+		this.foregroundColor = Color.BLACK;
 	}
 
 	public Mode getCurrentMode() {
@@ -57,6 +61,10 @@ public class CanvasModel extends CanvasModel_ReadOnly {
 
 	public void setBitmap(Bitmap bitmap) {
 		this.bitmap = Bitmap.createBitmap(bitmap);
+	}
+
+	public void resetBitmap() {
+		this.bitmap.eraseColor(backgroundColor);
 	}
 
 }

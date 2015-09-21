@@ -45,16 +45,13 @@ public class CanvasActivity extends Activity {
 		}
 		window.setAttributes(wmlp);
 
-		setImmersiveMode(); // if possible that is... get the best available
+		setImmersiveMode();
 
 		model = new CanvasModel();
-		Logger.Info(this,"model initialized");
-		tool = new Pen();
-		Logger.Debug(this,"tool created");	
+		tool = new Pen();	
 		setContentView(R.layout.activity_canvas);
-		Logger.Debug(this,"content view set");
 		view = (CanvasView) findViewById(R.id.viewCanvas);
-		Logger.Debug(this,"View found");
+		
 		Logger.Verbose(this,"Ending onCreate(Bundle)");
 	}
 
@@ -101,30 +98,44 @@ public class CanvasActivity extends Activity {
 		Logger.v(this, "Tool handeled the event");
 		model.updateBitmap(tool.getPath(), tool.getPaint());
 		Logger.v(this, "model updated with the change");
-		try{
-			if(view == null){
-				Logger.d(this, "how the fuck is 'view' null??");
-			}
-			view.invalidate();
-			Logger.v(this, "View invalidated and redrawn");
-		}catch(Exception e){
-			Logger.e(this, "invalidate fucked up!!", e);
-		}
+		view.invalidate();
+		Logger.v(this, "View invalidated and redrawn");
 		return true;
 	}
-
+	
 	@Override
-	public boolean dispatchKeyEvent(KeyEvent event) {
-		Logger.Verbose(this,"Starting dispatchKeyEvent(KeyEvent)");
-		if (event.getKeyCode() == KeyEvent.KEYCODE_VOLUME_DOWN) {
-			Logger.Verbose(this,"Volume Key pressed");
-			model.changeMode(event);
-			return true;
-		}
-		Logger.Verbose(this,"Ending dispatchKeyEvent(KeyEvent)");
-		return super.dispatchKeyEvent(event);
+	public boolean onKeyDown(int keyCode, KeyEvent event){
+		event.startTracking();
+		return true;
 	}
-
+	
+	@Override 
+	public boolean onKeyUp(int keyCode, KeyEvent event){
+		if (event.isTracking() && !event.isCanceled()) {
+        	switch(event.getKeyCode()){
+				case KeyEvent.KEYCODE_VOLUME_DOWN:
+					model.changeMode(event);
+					return true;
+				case KeyEvent.KEYCODE_BACK:
+					model.resetBitmap();
+					view.invalidate();
+					return true;
+        	}
+        }
+		return super.onKeyUp(keyCode, event);
+	}
+	
+	@Override
+	public boolean onKeyLongPress(int keyCode, KeyEvent event){
+    	switch(event.getKeyCode()){
+			case KeyEvent.KEYCODE_BACK:
+				this.finish();
+				return true;
+    	}
+		return super.onKeyLongPress(keyCode, event);
+	}
+	
+	
 	public void intializeBitmap(int w, int h) {
 		Bitmap canvasBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
 		model.setBitmap(canvasBitmap);
@@ -140,11 +151,7 @@ public class CanvasActivity extends Activity {
 	public CanvasModel getModel(){
 		return model;
 	}
-	
-	public void setModel(CanvasModel  model){
-		this.model = model;
-	}
-	
+
 	public Tool getTool(){
 		return tool;
 	}
