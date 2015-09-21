@@ -1,4 +1,4 @@
-package inc.flide.touchboard.tool;
+package inc.flide.touchboard.tool.edit;
 
 import inc.flide.touchboard.logging.*;
 import inc.flide.touchboard.model.*;
@@ -11,18 +11,20 @@ import android.graphics.Bitmap;
 import android.graphics.Paint;
 import android.graphics.Path;
 
-public class Pen extends Brush
+public class Pen extends EditTool
 {
 	private boolean penDownFlag,penMoveFlag,penUpFlag;
-	public Pen(CanvasModel model)
-	{
-		super(model);
+	
+	public Pen(){
+		paint = new Paint();
+		path = new Path();
 		setPaintAttributes();
 		clearPenDownFlag();
 		clearPenMoveFlag();
 		clearPenUpFlag();
 	}
-
+	
+	@Override
 	public boolean handleTouchEvent(MotionEvent event)
 	{
 		
@@ -43,25 +45,25 @@ public class Pen extends Brush
 		return true;
 	}
 
-	public void onPenDown(MotionEvent event)
+	private void onPenDown(MotionEvent event)
 	{
+		path.reset();
 		setPenDownFlag();
 		float x = event.getX();
-		float y = event.getY();
-		 
+		float y = event.getY(); 
 		path.moveTo(x, y);
-		//model.updateBitmap(path,paint);
 	}
-	public void onPenMove(MotionEvent event)
+
+	private void onPenMove(MotionEvent event)
 	{
 		setPenMoveFlag();
 		clearPenDownFlag();
 		float x = event.getX();
 		float y = event.getY();
 		path.lineTo(x, y);
-		model.updateBitmap(path,paint);
 	}
-	public void onPenUp(MotionEvent event)
+
+	private void onPenUp(MotionEvent event)
 	{
 		setPenUpFlag();
 
@@ -71,19 +73,16 @@ public class Pen extends Brush
 		if(penDownFlag == true)
 		{
 			path.addCircle(x, y, paint.getStrokeWidth()/2.0f,Path.Direction.CW);
-			model.updateBitmap(path,paint);
 			clearPenDownFlag();
 		}
 		else if(penMoveFlag == true)
 		{
-			model.updateBitmap(path,paint);
 			clearPenMoveFlag();
 		}
-		path.reset();
 		clearPenUpFlag();
 	}
 
-	public void setPaintAttributes()
+	private void setPaintAttributes()
 	{
 		//paint.setColor(model.getForegroundColor());
 		paint.setAntiAlias(true);
@@ -92,7 +91,7 @@ public class Pen extends Brush
 		paint.setStrokeJoin(Paint.Join.ROUND);
 		paint.setStrokeCap(Paint.Cap.ROUND);
 		paint.setDither(true);
-		Logger.Verbose("Ending setPaintAttributes()");
+		Logger.Verbose(this,"Ending setPaintAttributes()");
 	}
 
 	private void setPenDownFlag()

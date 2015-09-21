@@ -1,68 +1,62 @@
 package inc.flide.touchboard.model;
 
-import inc.flide.touchboard.*;
-import inc.flide.touchboard.tool.*;
-import inc.flide.touchboard.logging.*;
-
 import android.graphics.Canvas;
 import android.graphics.Bitmap;
 import android.graphics.Paint;
 import android.graphics.Path;
-
 import android.view.KeyEvent;
+import inc.flide.touchboard.logging.Logger;
 
-public class CanvasModel
-{
-	private Tool tool;
+public class CanvasModel extends CanvasModel_ReadOnly {
 	private int foregroundColor, backgroundColor;
 	private Bitmap bitmap;
+	private Mode currentMode;
 
-	public CanvasModel()
-	{
-		tool = new Pen(this);
-	}
 
-	public void changeMode(KeyEvent event)
-	{
-		Logger.Verbose( "Change Mode called");
-	}
-	public void updateBitmap(Path path, Paint paint)
-	{
-		 Canvas canvas = new Canvas(bitmap);
-		 canvas.drawPath(path,paint);
+	public final void changeMode(KeyEvent event) {
+		Logger.Verbose(this, "Change Mode called");
+		if (currentMode == Mode.Edit) {
+			currentMode = Mode.Observe;
+		} else if (currentMode == Mode.Observe) {
+			currentMode = Mode.Edit;
+		}
 	}
 
-	//Getter's and Setter's for the data variables
-	public Tool getTool()
-	{
-		 return tool;
+	public CanvasModel() {
 	}
-	public void setTool(Tool tool)
-	{
-		 this.tool = tool;
+
+	public Mode getCurrentMode() {
+		return currentMode;
 	}
-	public int getForegroundColor()
-	{
-		 return foregroundColor;
+
+	public void updateBitmap(Path path, Paint paint) {
+		Canvas canvas = new Canvas(bitmap);
+		canvas.drawPath(path, paint);
 	}
-	public void setForegroundColor(int foregroundColor)
-	{
-		 this.foregroundColor = foregroundColor;
+
+	// Getter's and Setter's for the data variables
+	public int getForegroundColor() {
+		return foregroundColor;
 	}
-	public int getBackgroundColor()
-	{
-		 return backgroundColor;
+
+	public void setForegroundColor(int foregroundColor) {
+		this.foregroundColor = foregroundColor;
 	}
-	public void setBackgroundColor(int backgroundColor)
-	{
-		 this.backgroundColor = backgroundColor;
+
+	public int getBackgroundColor() {
+		return backgroundColor;
 	}
-	public Bitmap getBitmap()
-	{
-		 return bitmap;
+
+	public void setBackgroundColor(int backgroundColor) {
+		this.backgroundColor = backgroundColor;
 	}
-	public void setBitmap(Bitmap bitmap)
-	{
-		 this.bitmap = Bitmap.createBitmap(bitmap);
+
+	public Bitmap getBitmap() {
+		return bitmap;
 	}
+
+	public void setBitmap(Bitmap bitmap) {
+		this.bitmap = Bitmap.createBitmap(bitmap);
+	}
+
 }

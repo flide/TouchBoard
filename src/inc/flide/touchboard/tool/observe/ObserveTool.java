@@ -1,8 +1,9 @@
-package inc.flide.touchboard.tool;
+package inc.flide.touchboard.tool.observe;
 
 import inc.flide.touchboard.logging.*;
 import inc.flide.touchboard.model.*;
 import inc.flide.touchboard.*;
+import inc.flide.touchboard.tool.*;
 
 import android.view.MotionEvent;
 
@@ -11,17 +12,8 @@ import android.graphics.Bitmap;
 import android.graphics.Paint;
 import android.graphics.Path;
 
-abstract public class Brush extends Tool
+abstract public class ObserveTool extends Tool
 {
-	public Brush(CanvasModel model)
-	{
-		super(model);
-		Logger.Verbose("Initiating Brush");
-
-		path = new Path();
-		paint = new Paint();
-
-		Logger.Verbose("Ending Brush");
-	}
-
+	
+	abstract public boolean handleTouchEvent(MotionEvent event);
 }
