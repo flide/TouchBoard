@@ -1,23 +1,18 @@
 package inc.flide.touchboard.tool.edit;
 
 import inc.flide.touchboard.logging.*;
-import inc.flide.touchboard.model.*;
-import inc.flide.touchboard.*;
+import inc.flide.touchboard.tool.Tool;
 
 import android.view.MotionEvent;
 
-import android.graphics.Canvas;
-import android.graphics.Bitmap;
 import android.graphics.Paint;
 import android.graphics.Path;
 
-public class Pen extends EditTool
+public class Pen extends Tool
 {
 	private boolean penDownFlag,penMoveFlag,penUpFlag;
 	
 	public Pen(){
-		paint = new Paint();
-		path = new Path();
 		setPaintAttributes();
 		clearPenDownFlag();
 		clearPenMoveFlag();

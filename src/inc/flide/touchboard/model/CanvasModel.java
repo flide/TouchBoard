@@ -4,34 +4,17 @@ import android.graphics.Canvas;
 import android.graphics.Bitmap;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.view.KeyEvent;
-import inc.flide.touchboard.R.color;
-import inc.flide.touchboard.logging.Logger;
 import android.graphics.Color;
 
 public class CanvasModel extends CanvasModel_ReadOnly {
 	private int foregroundColor, backgroundColor;
 	private Bitmap bitmap;
-	private Mode currentMode;
-
-
-	public final void changeMode(KeyEvent event) {
-		Logger.Verbose(this, "Change Mode called");
-		if (currentMode == Mode.Edit) {
-			currentMode = Mode.Observe;
-		} else if (currentMode == Mode.Observe) {
-			currentMode = Mode.Edit;
-		}
-	}
 
 	public CanvasModel() {
 		this.backgroundColor = Color.WHITE;
 		this.foregroundColor = Color.BLACK;
 	}
 
-	public Mode getCurrentMode() {
-		return currentMode;
-	}
 
 	public void updateBitmap(Path path, Paint paint) {
 		Canvas canvas = new Canvas(bitmap);

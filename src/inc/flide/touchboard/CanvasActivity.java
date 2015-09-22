@@ -3,7 +3,6 @@ package inc.flide.touchboard;
 import inc.flide.touchboard.logging.*;
 import inc.flide.touchboard.model.*;
 import inc.flide.touchboard.tool.*;
-import inc.flide.touchboard.tool.edit.Pen;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Bitmap;
@@ -25,7 +24,7 @@ import android.view.KeyEvent;
 public class CanvasActivity extends Activity {
 
 	private CanvasView view;
-	private Pen tool;
+	private ToolManager toolManager;
 	private CanvasModel model;
 
 	public CanvasActivity() {
@@ -48,7 +47,7 @@ public class CanvasActivity extends Activity {
 		setImmersiveMode();
 
 		model = new CanvasModel();
-		tool = new Pen();	
+		toolManager = new ToolManager();	
 		setContentView(R.layout.activity_canvas);
 		view = (CanvasView) findViewById(R.id.viewCanvas);
 		
@@ -94,12 +93,14 @@ public class CanvasActivity extends Activity {
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		Logger.v(this, "Touch Event Encountered");
-		tool.handleTouchEvent(event);
+		toolManager.getTool().handleTouchEvent(event);
 		Logger.v(this, "Tool handeled the event");
-		model.updateBitmap(tool.getPath(), tool.getPaint());
-		Logger.v(this, "model updated with the change");
-		view.invalidate();
-		Logger.v(this, "View invalidated and redrawn");
+		if(toolManager.getCurrentMode() == Mode.Edit){
+			model.updateBitmap(toolManager.getTool().getPath(), toolManager.getTool().getPaint());
+			Logger.v(this, "model updated with the change");
+			view.invalidate();
+			Logger.v(this, "View invalidated and redrawn");
+		}
 		return true;
 	}
 	
@@ -114,7 +115,7 @@ public class CanvasActivity extends Activity {
 		if (event.isTracking() && !event.isCanceled()) {
         	switch(event.getKeyCode()){
 				case KeyEvent.KEYCODE_VOLUME_DOWN:
-					model.changeMode(event);
+					toolManager.changeMode(event);
 					return true;
 				case KeyEvent.KEYCODE_BACK:
 					model.resetBitmap();
@@ -135,7 +136,6 @@ public class CanvasActivity extends Activity {
 		return super.onKeyLongPress(keyCode, event);
 	}
 	
-	
 	public void intializeBitmap(int w, int h) {
 		Bitmap canvasBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
 		model.setBitmap(canvasBitmap);
@@ -151,8 +151,8 @@ public class CanvasActivity extends Activity {
 	public CanvasModel getModel(){
 		return model;
 	}
-
+	
 	public Tool getTool(){
-		return tool;
+		return toolManager.getTool();
 	}
 }

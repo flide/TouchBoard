@@ -1,6 +1,5 @@
 package inc.flide.touchboard;
 
-import inc.flide.touchboard.model.*;
 import inc.flide.touchboard.logging.*;
 
 import android.util.AttributeSet;
