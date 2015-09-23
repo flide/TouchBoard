@@ -4,17 +4,28 @@ Also, since the various apps of this kind in the google play store ask for stupi
 Following are few ideas I currently have. I have also tried to catogriese them into various version goal.
 This is my first attempt at any opensource application, so please be patient with me.
 
-What all is available already?
+##What all is available already?
 White Canvas
 	- Only white background, no option to change background color
+
 Immersive Mode
 	- Works in true fullscreen, only available for 4.2.2 and above
+
 Black Pen
 	- Only a Black pen with predefined stroke attributes.
-Clear the screen for new doodling.
-	- Currently, this is actually a bug. When the screen is reoriented the canvas is cleared.
 
-Various other Ideas I plan to implement (not in specific order) : 
+Clear the screen for new doodling.
+	- Pressing the back button clears the screen.
+	- Long press the back button to exit application.
+
+Observe Mode/Edit Mode
+	- Pressing the vol-down button toggles between the two modes.
+	- Currently Observe Mode does nothing but to prohibit the user from making any changes (accidental or otherwise).
+
+Saving the image?
+	- Damn you!! just take a screenshot for now.
+
+##Various other Ideas I plan to implement (not in specific order) 
 Modes of usage, just like vim. Modes should be interchangable by using hardware keys (vol-up or vol-down)
 	"paint mode" where you can "edit" the drawing.
 	"observe mode" where you can zoom, shrink, move to different parts of the painting.
