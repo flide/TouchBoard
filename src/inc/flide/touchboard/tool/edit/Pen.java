@@ -1,6 +1,7 @@
 package inc.flide.touchboard.tool.edit;
 
 import inc.flide.touchboard.logging.*;
+import inc.flide.touchboard.model.CanvasModel;
 import inc.flide.touchboard.tool.Tool;
 
 import android.view.MotionEvent;
@@ -37,6 +38,7 @@ public class Pen extends Tool
 		default:
 			return false;
 		}
+		CanvasModel.getModel().updateBitmap(path, paint);
 		return true;
 	}
 

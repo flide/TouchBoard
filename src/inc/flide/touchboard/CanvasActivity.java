@@ -25,10 +25,6 @@ public class CanvasActivity extends Activity {
 
 	private CanvasView view;
 	private ToolManager toolManager;
-	private CanvasModel model;
-
-	public CanvasActivity() {
-	}
 
 	@SuppressLint("NewApi")
 	@Override
@@ -47,10 +43,9 @@ public class CanvasActivity extends Activity {
 		setImmersiveMode();
 
 		setContentView(R.layout.activity_canvas);
-		model = new CanvasModel();
 		toolManager = new ToolManager();	
 		view = (CanvasView) findViewById(R.id.viewCanvas);
-		model.registerObserver(view);
+		CanvasModel.getModel().registerObserver(view);
 		
 		Logger.Verbose(this,"Ending onCreate(Bundle)");
 	}
@@ -96,10 +91,6 @@ public class CanvasActivity extends Activity {
 		Logger.v(this, "Touch Event Encountered");
 		toolManager.getTool().handleTouchEvent(event);
 		Logger.v(this, "Tool handeled the event");
-		if(toolManager.getCurrentMode() == Mode.Edit){
-			model.updateBitmap(toolManager.getTool().getPath(), toolManager.getTool().getPaint());
-			Logger.v(this, "model updated with the change");
-		}
 		return true;
 	}
 	
@@ -117,7 +108,7 @@ public class CanvasActivity extends Activity {
 					toolManager.changeMode(event);
 					return true;
 				case KeyEvent.KEYCODE_BACK:
-					model.resetBitmap();
+					CanvasModel.getModel().resetBitmap();
 					return true;
         	}
         }
@@ -136,18 +127,14 @@ public class CanvasActivity extends Activity {
 	
 	public void intializeBitmap(int w, int h) {
 		Bitmap canvasBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
-		model.setBitmap(canvasBitmap);
+		CanvasModel.getModel().setBitmap(canvasBitmap);
 	}
 
 	public void reorientScreen(int oldw, int oldh, int rotateBy) {
 		Matrix matrix = new Matrix();
 		matrix.postRotate(rotateBy * 90f);
-		Bitmap rotatedBitmap = Bitmap.createBitmap(model.getBitmap(), 0, 0, oldw, oldh, matrix, false);
-		model.setBitmap(rotatedBitmap);
-	}
-	
-	public CanvasModel getModel(){
-		return model;
+		Bitmap rotatedBitmap = Bitmap.createBitmap(CanvasModel.getModel().getBitmap(), 0, 0, oldw, oldh, matrix, false);
+		CanvasModel.getModel().setBitmap(rotatedBitmap);
 	}
 	
 	public Tool getTool(){

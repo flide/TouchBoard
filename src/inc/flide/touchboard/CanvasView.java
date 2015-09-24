@@ -1,7 +1,7 @@
 package inc.flide.touchboard;
 
 import inc.flide.touchboard.logging.*;
-
+import inc.flide.touchboard.model.CanvasModel;
 import android.util.AttributeSet;
 import android.content.Context;
 
@@ -58,7 +58,7 @@ public class CanvasView extends View implements Observer
 			Logger.d(this, "activity is null!!!");
 			return;
 		}
-		canvas.drawBitmap(canvasActivity.getModel().getBitmap(), 0, 0,canvasActivity.getTool().getPaint());
+		canvas.drawBitmap(CanvasModel.getModel().getBitmap(), 0, 0,canvasActivity.getTool().getPaint());
 		Logger.Verbose(this, "Ending onDraw()");
 	}
 

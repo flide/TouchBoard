@@ -14,12 +14,20 @@ import android.graphics.Color;
 public class CanvasModel extends CanvasModel_ReadOnly implements Subject{
 	private int foregroundColor, backgroundColor;
 	private Bitmap bitmap;
-
-	public CanvasModel() {
+	private static CanvasModel model;
+	
+	private CanvasModel() {
 		this.backgroundColor = Color.WHITE;
 		this.foregroundColor = Color.BLACK;
 	}
 
+	public static CanvasModel getModel(){
+		if(model == null){
+			model = new CanvasModel();
+		}
+		
+		return model;
+	}
 
 	public void updateBitmap(Path path, Paint paint) {
 		Canvas canvas = new Canvas(bitmap);
