@@ -46,10 +46,11 @@ public class CanvasActivity extends Activity {
 
 		setImmersiveMode();
 
+		setContentView(R.layout.activity_canvas);
 		model = new CanvasModel();
 		toolManager = new ToolManager();	
-		setContentView(R.layout.activity_canvas);
 		view = (CanvasView) findViewById(R.id.viewCanvas);
+		model.registerObserver(view);
 		
 		Logger.Verbose(this,"Ending onCreate(Bundle)");
 	}
@@ -98,8 +99,6 @@ public class CanvasActivity extends Activity {
 		if(toolManager.getCurrentMode() == Mode.Edit){
 			model.updateBitmap(toolManager.getTool().getPath(), toolManager.getTool().getPaint());
 			Logger.v(this, "model updated with the change");
-			view.invalidate();
-			Logger.v(this, "View invalidated and redrawn");
 		}
 		return true;
 	}
@@ -119,7 +118,6 @@ public class CanvasActivity extends Activity {
 					return true;
 				case KeyEvent.KEYCODE_BACK:
 					model.resetBitmap();
-					view.invalidate();
 					return true;
         	}
         }

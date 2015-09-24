@@ -15,7 +15,7 @@ import android.graphics.Canvas;
 //Primary Responsibility and the ONLY Responsibility this class should and will have, would be
 //to Present the screen to the user.
 //Strict No to state mantianance, handling user input or doing any data manipulation.
-public class CanvasView extends View
+public class CanvasView extends View implements Observer
 {
 	
 	private static int currentDisplayOrientation;
@@ -88,6 +88,11 @@ public class CanvasView extends View
 		}
 		
 		Logger.Verbose(this,"onSizeChanged(int,int,int,int) Ended");
+	}
+
+	@Override
+	public void subjectUpdated() {
+		this.invalidate();
 	}
 
 }

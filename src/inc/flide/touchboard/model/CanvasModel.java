@@ -1,12 +1,17 @@
 package inc.flide.touchboard.model;
 
 import android.graphics.Canvas;
+
+import java.util.Iterator;
+
 import android.graphics.Bitmap;
 import android.graphics.Paint;
 import android.graphics.Path;
+import inc.flide.touchboard.Observer;
+import inc.flide.touchboard.Subject;
 import android.graphics.Color;
 
-public class CanvasModel extends CanvasModel_ReadOnly {
+public class CanvasModel extends CanvasModel_ReadOnly implements Subject{
 	private int foregroundColor, backgroundColor;
 	private Bitmap bitmap;
 
@@ -19,6 +24,7 @@ public class CanvasModel extends CanvasModel_ReadOnly {
 	public void updateBitmap(Path path, Paint paint) {
 		Canvas canvas = new Canvas(bitmap);
 		canvas.drawPath(path, paint);
+		notifyObservers();
 	}
 
 	// Getter's and Setter's for the data variables
@@ -44,10 +50,27 @@ public class CanvasModel extends CanvasModel_ReadOnly {
 
 	public void setBitmap(Bitmap bitmap) {
 		this.bitmap = Bitmap.createBitmap(bitmap);
+		notifyObservers();
 	}
 
 	public void resetBitmap() {
 		this.bitmap.eraseColor(backgroundColor);
+		notifyObservers();
+	}
+
+
+	@Override
+	public void registerObserver(Observer observer) {
+		observers.add(observer);
+	}
+
+
+	@Override
+	public void notifyObservers() {
+		Iterator<Observer> observerIterator = observers.iterator();
+		while(observerIterator.hasNext()){
+			observerIterator.next().subjectUpdated();
+		}
 	}
 
 }
