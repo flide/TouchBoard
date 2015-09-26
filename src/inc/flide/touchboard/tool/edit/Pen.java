@@ -21,7 +21,7 @@ public class Pen extends Tool
 	}
 	
 	@Override
-	public boolean handleTouchEvent(MotionEvent event)
+	public boolean handleTouchEvent(MotionEvent event, CanvasModel model)
 	{
 		
 		switch (event.getAction()) 
@@ -38,7 +38,7 @@ public class Pen extends Tool
 		default:
 			return false;
 		}
-		CanvasModel.getModel().updateBitmap(path, paint);
+		model.updateBitmap(path, paint);
 		return true;
 	}
 

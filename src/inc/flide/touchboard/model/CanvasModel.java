@@ -14,25 +14,16 @@ import android.graphics.Color;
 /*
  * It is the Model's job to notify the View when something has changed.
  * */
-public class CanvasModel extends CanvasModel_ReadOnly implements Subject{
+public class CanvasModel implements Subject{
 	private int foregroundColor, backgroundColor;
 	private Bitmap bitmap;
 	private Canvas canvas;
-	private static CanvasModel model;
 	
-	private CanvasModel() {
+	public CanvasModel() {
 		this.backgroundColor = Color.WHITE;
 		this.foregroundColor = Color.BLACK;
 		this.bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888);
 		this.canvas = new Canvas(bitmap);
-	}
-
-	public static CanvasModel getModel(){
-		if(model == null){
-			model = new CanvasModel();
-		}
-		
-		return model;
 	}
 
 	public void updateBitmap(Path path, Paint paint) {

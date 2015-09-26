@@ -1,7 +1,7 @@
 package inc.flide.touchboard.tool;
 
 import android.view.MotionEvent;
-
+import inc.flide.touchboard.model.CanvasModel;
 import android.graphics.Paint;
 import android.graphics.Path;
 
@@ -13,7 +13,7 @@ abstract public class Tool {
 		path = new Path();
 		paint = new Paint();
 	}
-	abstract public boolean handleTouchEvent(MotionEvent event);
+	abstract public boolean handleTouchEvent(MotionEvent event, CanvasModel model);
 
 	public Path getPath() {
 		return path;

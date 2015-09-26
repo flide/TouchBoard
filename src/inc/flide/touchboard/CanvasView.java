@@ -1,7 +1,6 @@
 package inc.flide.touchboard;
 
 import inc.flide.touchboard.logging.*;
-import inc.flide.touchboard.model.CanvasModel;
 import android.util.AttributeSet;
 import android.content.Context;
 
@@ -52,7 +51,7 @@ public class CanvasView extends View implements Observer
 	protected void onDraw(Canvas canvas) 
 	{
 		Logger.Verbose(this, "Starting onDraw()");
-		canvas.drawBitmap(CanvasModel.getModel().getBitmap(), 0, 0,null);
+		canvas.drawBitmap(canvasActivity.getCurrentDrawableBitmap(), 0, 0,null);
 		Logger.Verbose(this, "Ending onDraw()");
 	}
 

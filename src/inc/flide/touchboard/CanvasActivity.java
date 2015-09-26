@@ -25,6 +25,7 @@ public class CanvasActivity extends Activity {
 
 	private CanvasView view;
 	private ToolManager toolManager;
+	private CanvasModel model;
 
 	@SuppressLint("NewApi")
 	@Override
@@ -45,7 +46,8 @@ public class CanvasActivity extends Activity {
 		setContentView(R.layout.activity_canvas);
 		toolManager = new ToolManager();	
 		view = (CanvasView) findViewById(R.id.viewCanvas);
-		CanvasModel.getModel().registerObserver(view);
+		model = new CanvasModel();
+		model.registerObserver(view);
 		
 		Logger.Verbose(this,"Ending onCreate(Bundle)");
 	}
@@ -89,7 +91,7 @@ public class CanvasActivity extends Activity {
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		Logger.v(this, "Touch Event Encountered");
-		toolManager.getTool().handleTouchEvent(event);
+		toolManager.getTool().handleTouchEvent(event, model);
 		Logger.v(this, "Tool handeled the event");
 		return true;
 	}
@@ -108,7 +110,7 @@ public class CanvasActivity extends Activity {
 					toolManager.changeMode(event);
 					return true;
 				case KeyEvent.KEYCODE_BACK:
-					CanvasModel.getModel().resetBitmap();
+					model.resetBitmap();
 					return true;
         	}
         }
@@ -127,14 +129,18 @@ public class CanvasActivity extends Activity {
 	
 	public void intializeBitmap(int w, int h) {
 		Bitmap canvasBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
-		CanvasModel.getModel().setBitmap(canvasBitmap);
+		this.model.setBitmap(canvasBitmap);
 	}
 
 	public void reorientScreen(int oldw, int oldh, int rotateBy) {
 		Matrix matrix = new Matrix();
 		matrix.setRotate(rotateBy * 90f);
-		Bitmap rotatedBitmap = Bitmap.createBitmap(CanvasModel.getModel().getBitmap(), 0, 0, oldw, oldh, matrix, false);
-		CanvasModel.getModel().setBitmap(rotatedBitmap);
+		Bitmap rotatedBitmap = Bitmap.createBitmap(model.getBitmap(), 0, 0, oldw, oldh, matrix, false);
+		model.setBitmap(rotatedBitmap);
+	}
+	
+	public Bitmap getCurrentDrawableBitmap(){
+		return model.getBitmap();
 	}
 
 }
