@@ -7,8 +7,7 @@ import java.util.Iterator;
 import android.graphics.Bitmap;
 import android.graphics.Paint;
 import android.graphics.Path;
-import inc.flide.touchboard.Observer;
-import inc.flide.touchboard.Subject;
+import inc.flide.touchboard.view.Observer;
 import android.graphics.Color;
 
 /*

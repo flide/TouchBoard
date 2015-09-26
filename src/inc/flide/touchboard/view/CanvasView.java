@@ -1,5 +1,6 @@
-package inc.flide.touchboard;
+package inc.flide.touchboard.view;
 
+import inc.flide.touchboard.CanvasActivity;
 import inc.flide.touchboard.logging.*;
 import android.util.AttributeSet;
 import android.content.Context;

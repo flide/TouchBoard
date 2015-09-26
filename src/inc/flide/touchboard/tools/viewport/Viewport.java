@@ -1,8 +1,8 @@
-package inc.flide.touchboard.tool.viewport;
+package inc.flide.touchboard.tools.viewport;
 
 import inc.flide.touchboard.logging.*;
 import inc.flide.touchboard.model.CanvasModel;
-import inc.flide.touchboard.tool.*;
+import inc.flide.touchboard.tools.*;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.view.MotionEvent;

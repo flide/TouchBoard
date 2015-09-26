@@ -1,8 +1,8 @@
-package inc.flide.touchboard.tool.edit;
+package inc.flide.touchboard.tools.edit;
 
 import inc.flide.touchboard.logging.*;
 import inc.flide.touchboard.model.CanvasModel;
-import inc.flide.touchboard.tool.Tool;
+import inc.flide.touchboard.tools.Tool;
 
 import android.view.MotionEvent;
 

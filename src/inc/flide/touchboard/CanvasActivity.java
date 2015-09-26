@@ -2,7 +2,8 @@ package inc.flide.touchboard;
 
 import inc.flide.touchboard.logging.*;
 import inc.flide.touchboard.model.*;
-import inc.flide.touchboard.tool.*;
+import inc.flide.touchboard.tools.*;
+import inc.flide.touchboard.view.CanvasView;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Bitmap;
