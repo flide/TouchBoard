@@ -11,14 +11,20 @@ import inc.flide.touchboard.Observer;
 import inc.flide.touchboard.Subject;
 import android.graphics.Color;
 
+/*
+ * It is the Model's job to notify the View when something has changed.
+ * */
 public class CanvasModel extends CanvasModel_ReadOnly implements Subject{
 	private int foregroundColor, backgroundColor;
 	private Bitmap bitmap;
+	private Canvas canvas;
 	private static CanvasModel model;
 	
 	private CanvasModel() {
 		this.backgroundColor = Color.WHITE;
 		this.foregroundColor = Color.BLACK;
+		this.bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888);
+		this.canvas = new Canvas(bitmap);
 	}
 
 	public static CanvasModel getModel(){
@@ -30,7 +36,6 @@ public class CanvasModel extends CanvasModel_ReadOnly implements Subject{
 	}
 
 	public void updateBitmap(Path path, Paint paint) {
-		Canvas canvas = new Canvas(bitmap);
 		canvas.drawPath(path, paint);
 		notifyObservers();
 	}
@@ -57,7 +62,8 @@ public class CanvasModel extends CanvasModel_ReadOnly implements Subject{
 	}
 
 	public void setBitmap(Bitmap bitmap) {
-		this.bitmap = Bitmap.createBitmap(bitmap);
+		this.bitmap = bitmap;
+		this.canvas.setBitmap(this.bitmap);
 		notifyObservers();
 	}
 
@@ -66,12 +72,10 @@ public class CanvasModel extends CanvasModel_ReadOnly implements Subject{
 		notifyObservers();
 	}
 
-
 	@Override
 	public void registerObserver(Observer observer) {
 		observers.add(observer);
 	}
-
 
 	@Override
 	public void notifyObservers() {
@@ -80,5 +84,4 @@ public class CanvasModel extends CanvasModel_ReadOnly implements Subject{
 			observerIterator.next().subjectUpdated();
 		}
 	}
-
 }

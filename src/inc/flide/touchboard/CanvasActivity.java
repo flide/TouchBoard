@@ -132,12 +132,9 @@ public class CanvasActivity extends Activity {
 
 	public void reorientScreen(int oldw, int oldh, int rotateBy) {
 		Matrix matrix = new Matrix();
-		matrix.postRotate(rotateBy * 90f);
+		matrix.setRotate(rotateBy * 90f);
 		Bitmap rotatedBitmap = Bitmap.createBitmap(CanvasModel.getModel().getBitmap(), 0, 0, oldw, oldh, matrix, false);
 		CanvasModel.getModel().setBitmap(rotatedBitmap);
 	}
-	
-	public Tool getTool(){
-		return toolManager.getTool();
-	}
+
 }

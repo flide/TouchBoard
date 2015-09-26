@@ -10,11 +10,9 @@ import android.view.Display;
 import android.graphics.Canvas;
 
 //this will be the View of the MVC.
-//I am not very convinced that CanvasView should be the View part of MVC model, but current
-//experiment scenario dictates that I try this out.
-//Primary Responsibility and the ONLY Responsibility this class should and will have, would be
-//to Present the screen to the user.
-//Strict No to state mantianance, handling user input or doing any data manipulation.
+//The ONLY Responsibility this class should and will have, would be to Present the screen to the user.
+//Strict NO to state maintenance, handling user input or doing any data manipulation.
+//Whenever the Model indicates to the View that it has changed, it is View's job to update itself.
 public class CanvasView extends View implements Observer
 {
 	
@@ -54,11 +52,7 @@ public class CanvasView extends View implements Observer
 	protected void onDraw(Canvas canvas) 
 	{
 		Logger.Verbose(this, "Starting onDraw()");
-		if(canvasActivity == null){
-			Logger.d(this, "activity is null!!!");
-			return;
-		}
-		canvas.drawBitmap(CanvasModel.getModel().getBitmap(), 0, 0,canvasActivity.getTool().getPaint());
+		canvas.drawBitmap(CanvasModel.getModel().getBitmap(), 0, 0,null);
 		Logger.Verbose(this, "Ending onDraw()");
 	}
 
