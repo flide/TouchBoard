@@ -3,8 +3,8 @@ package inc.flide.touchboard.tools;
 import android.view.KeyEvent;
 import inc.flide.touchboard.logging.Logger;
 import inc.flide.touchboard.model.Mode;
-import inc.flide.touchboard.tool.edit.Pen;
-import inc.flide.touchboard.tool.viewport.Viewport;
+import inc.flide.touchboard.tools.edit.Pen;
+import inc.flide.touchboard.tools.viewport.Viewport;
 
 public class ToolManager {
 
