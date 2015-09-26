@@ -8,7 +8,7 @@
     tools:context="inc.flide.touchboard.CanvasActivity"
     tools:ignore="MergeRootFrame" >
 
-    <inc.flide.touchboard.CanvasView 
+    <inc.flide.touchboard.view.CanvasView 
         android:id="@+id/viewCanvas"
     	android:layout_width="fill_parent"
 	    android:layout_height="0dp"
