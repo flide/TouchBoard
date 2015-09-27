@@ -6,19 +6,15 @@ import inc.flide.touchboard.tools.*;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.view.MotionEvent;
+import android.graphics.Canvas;
 
 public class Viewport extends Tool
 {
 	public boolean handleTouchEvent(MotionEvent event, CanvasModel model){
 		Logger.Verbose(this, "Viewport tool started with the touch event consumption");
-		Matrix matrix = new Matrix();
-		matrix.setTranslate(100, 0);
-		//matrix.postTranslate(15, 15);
-		//matrix.preTranslate(15, 15);
-		//matrix.postRotate(1 * 90f);
 		Bitmap originalBitmap = model.getBitmap();
-		Bitmap transformedBitmap = Bitmap.createBitmap(originalBitmap, 0, 0, originalBitmap.getWidth(), originalBitmap.getHeight(), matrix, true);
-		model.setBitmap(transformedBitmap);
+		Canvas canvas = new Canvas(originalBitmap);
+		canvas.translate(100, 100);
 		Logger.Verbose(this, "So? is it translatting?");
 		return true;
 	}
