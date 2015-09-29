@@ -8,6 +8,7 @@ import android.content.Context;
 import android.view.View;
 import android.view.Display;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 
 //this will be the View of the MVC.
 //The ONLY Responsibility this class should and will have, would be to Present the screen to the user.
@@ -52,7 +53,7 @@ public class CanvasView extends View implements Observer
 	protected void onDraw(Canvas canvas) 
 	{
 		Logger.Verbose(this, "Starting onDraw()");
-		canvas.drawBitmap(canvasActivity.getCurrentDrawableBitmap(), 0, 0,null);
+		canvas.drawBitmap(canvasActivity.getCurrentDrawableBitmap(), new Matrix(),null);
 		Logger.Verbose(this, "Ending onDraw()");
 	}
 
