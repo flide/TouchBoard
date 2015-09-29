@@ -8,6 +8,7 @@ import android.content.Context;
 import android.view.View;
 import android.view.Display;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 
 //this will be the View of the MVC.
@@ -46,6 +47,7 @@ public class CanvasView extends View implements Observer
 
 	private void intializeView(){
 		this.canvasActivity = (CanvasActivity)getContext();
+		this.setBackgroundColor(Color.WHITE);
 		this.setKeepScreenOn(true);
 	}
 

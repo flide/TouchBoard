@@ -44,9 +44,9 @@ public class CanvasActivity extends Activity {
 
 		setImmersiveMode();
 
-		setContentView(R.layout.activity_canvas);
+		view = new CanvasView(this);
+		setContentView(view);
 		toolManager = new ToolManager();	
-		view = (CanvasView) findViewById(R.id.viewCanvas);
 		model = new CanvasModel();
 		model.registerObserver(view);
 		
