@@ -6,18 +6,14 @@ import inc.flide.touchboard.logging.*;
 import android.util.AttributeSet;
 import android.content.Context;
 
-import android.view.View;
+import android.widget.ImageView;
 import android.view.Display;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Bitmap;
-import android.graphics.Matrix;
 
 //this will be the View of the MVC.
 //The ONLY Responsibility this class should and will have, would be to Present the screen to the user.
 //Strict NO to state maintenance, handling user input or doing any data manipulation.
 //Whenever the Model indicates to the View that it has changed, it is View's job to update itself.
-public class CanvasView extends View implements Observer
+public class CanvasView extends ImageView implements Observer
 {
 	
 	private static int currentDisplayOrientation;
@@ -54,14 +50,6 @@ public class CanvasView extends View implements Observer
 	}
 
 	@Override
-	protected void onDraw(Canvas canvas) 
-	{
-		Logger.Verbose(this, "Starting onDraw()");
-		canvas.drawBitmap(canvasActivity.getCurrentDrawableBitmap(), new Matrix(),null);
-		Logger.Verbose(this, "Ending onDraw()");
-	}
-
-	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) 
 	{
 		Logger.Verbose(this,"onSizeChanged(w="+w+", h="+h+", oldw="+oldw+", oldh="+oldh+") Started");
@@ -73,7 +61,6 @@ public class CanvasView extends View implements Observer
 		if(oldw==0 && oldh==0)
 		{
 			//Initialization of the application and this block will run only once.
-			Logger.Verbose(this,"Application Initialized");
 			activity.intializeBitmap(w, h);
 			currentDisplayOrientation = display.getRotation();
 		}
@@ -91,6 +78,7 @@ public class CanvasView extends View implements Observer
 
 	@Override
 	public void subjectUpdated() {
+		this.setImageBitmap(canvasActivity.getCurrentDrawableBitmap());
 		this.invalidate();
 	}
 
