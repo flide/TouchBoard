@@ -19,7 +19,7 @@ public class CanvasModel implements Subject{
 	private Canvas canvas;
 	
 	public CanvasModel() {
-		this.backgroundColor = Color.WHITE;
+		this.backgroundColor = Color.argb(0, 0, 0, 0);
 		this.foregroundColor = Color.BLACK;
 		this.bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888);
 		this.canvas = new Canvas(bitmap);
